@@ -1,16 +1,19 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 from gtts import gTTS
-import os
 from io import BytesIO
 
 # --- Page Config ---
 st.set_page_config(page_title="Placement Dashboard", layout="wide")
 st.title("🎓 Placement Data Analytics Dashboard")
 
-# --- Load Data ---
-df = pd.read_csv("C:\\Users\\venka\\Downloads\\NNRG_Placement_2018_2025.csv")
+# --- Load Data (relative path) ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_PATH = os.path.join(BASE_DIR, "../data/NNRG_Placement_2018_2025.csv")
+
+df = pd.read_csv(DATA_PATH)
 
 # --- Sidebar Filter ---
 st.sidebar.header("📅 Filter by Year")
@@ -54,10 +57,10 @@ else:
 
 st.markdown("---")
 
-# --- Graphs ---
+# --- Side-by-side Graphs ---
 col1, col2 = st.columns(2)
 
-# Year-wise placements
+# 1️⃣ Year-wise placements
 year_counts = df['Year'].value_counts().sort_index()
 fig_bar = px.bar(
     x=year_counts.index,
@@ -68,7 +71,7 @@ fig_bar = px.bar(
 )
 col1.plotly_chart(fig_bar, use_container_width=True)
 
-# Branch-wise distribution
+# 2️⃣ Branch-wise distribution
 branch_counts = filtered_df['Branch'].value_counts()
 fig_pie = px.pie(
     names=branch_counts.index,
@@ -79,7 +82,7 @@ col2.plotly_chart(fig_pie, use_container_width=True)
 
 st.markdown("---")
 
-# Treemap
+# --- Treemap ---
 if not filtered_df.empty:
     branch_counts_df = filtered_df['Branch'].value_counts().reset_index()
     branch_counts_df.columns = ['Branch', 'Count']
@@ -95,7 +98,7 @@ else:
 
 st.markdown("---")
 
-# Recruiters
+# --- Recruiters ---
 st.subheader(f"🏢 Top Recruiters ({'All Years' if selected_year == 'All' else selected_year})")
 if not filtered_df.empty:
     recruiter_counts = filtered_df['Name of the Employer'].value_counts().reset_index()
@@ -113,7 +116,7 @@ else:
 
 st.markdown("---")
 
-# Full Data Table
+# --- Full Data Table ---
 st.subheader("📋 Full Placement Data")
 st.dataframe(filtered_df, use_container_width=True)
 
@@ -121,12 +124,9 @@ st.markdown("---")
 
 # --- Text-to-Speech Section ---
 st.subheader("🔊 Hear Summary")
-
-# Generate audio summary
 if st.button("▶️ Play Summary Audio"):
     tts = gTTS(summary_text)
     audio_path = BytesIO()
     tts.write_to_fp(audio_path)
     audio_path.seek(0)
     st.audio(audio_path, format="audio/mp3")
-
