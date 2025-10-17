@@ -1,14 +1,6 @@
-streamlit==1.50.0
-numpy==2.3.4
-pandas==2.3.3
-Pillow==11.3.0
-opencv-python-headless==4.10.0.84
-deepface==0.0.93
-tensorflow==2.20.0  # only if you can use numpy>=2.1.0
-rembg>=2.0.62        # compatible with Python 3.13
-gtts==2.5.1
-pyttsx3==2.90
-python-dateutil==2.9.0.post0
-tzdata==2025.2
-plotly==5.24.1
-altair==5.5.0
+streamlit
+deepface
+tensorflow
+numpy
+pillow
+opencv-python-headless
