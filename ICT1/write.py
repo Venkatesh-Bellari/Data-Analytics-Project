@@ -7,8 +7,7 @@ st.set_page_config(page_title="Placement Dashboard", layout="wide")
 st.title("🎓 Placement Data Analytics Dashboard")
 
 # --- Load Data ---
-df = pd.read_csv("C:\\Users\\venka\\Downloads\\NNRG_Placement_2018_2025.csv")
-
+df = pd.read_csv("data/NNRG_Placement_2018_2025.csv")
 # --- Sidebar Filter ---
 st.sidebar.header("📅 Filter by Year")
 selected_year = st.sidebar.selectbox("Select Year", ["All"] + sorted(df['Year'].unique().tolist()))
