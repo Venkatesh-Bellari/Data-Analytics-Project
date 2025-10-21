@@ -1,8 +1,22 @@
+# Core Streamlit
 streamlit==1.28.0
-deepface==0.1.30
+
+# DeepFace (works best with these TF versions)
+deepface==0.0.79
 tensorflow==2.13.0
 keras==2.13.1
+
+# RetinaFace dependency
+retinaface==0.0.15
+
+# Computer vision
 opencv-python-headless==4.8.1.78
 numpy==1.26.0
 pillow==10.1.0
-retinaface==0.0.15
+
+# Background removal
+rembg==2.0.61
+
+# Torch (for DeepFace alternative models)
+torch==2.1.0
+torchvision==0.16.0
